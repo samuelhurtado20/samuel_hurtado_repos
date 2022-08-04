@@ -21,6 +21,28 @@ model Tribe {
   id_tribe        Int          @id @default(autoincrement())
   name            String
   status          Int
-  organization    Organization @relation(fields: [id_organization], references: [id_organization])
+  Organization    Organization @relation(fields: [id_organization], references: [id_organization])
   id_organization Int
+  Repository      Repository[]
+}
+
+model Repository {
+  id_repository Int      @id @default(autoincrement())
+  name          String
+  state         String   @db.Char(1)
+  create_time   DateTime @db.Timestamptz(3)
+  status        Int
+  Tribe         Tribe    @relation(fields: [id_tribe], references: [id_tribe])
+  id_tribe      Int
+  Metrics       Metrics?
+}
+
+model Metrics {
+  id_repository   Int        @id @unique
+  Repository      Repository @relation(fields: [id_repository], references: [id_repository])
+  coverage        Float      @db.DoublePrecision
+  bugs            Int
+  vulnerabilities Int
+  hotspot         Int
+  code_smells     Int
 }
