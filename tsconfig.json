@@ -8,7 +8,7 @@
       "target": "es2016",
       "module": "commonjs",
       "forceConsistentCasingInFileNames": true,
-      "noUnusedLocals": true, 
+      "noUnusedLocals": false, 
       "noUnusedParameters": true,  
       "noImplicitReturns": true,
       "noFallthroughCasesInSwitch": true, 

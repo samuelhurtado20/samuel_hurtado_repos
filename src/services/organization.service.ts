@@ -1,7 +1,8 @@
 import { Organization, PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
+import { OrganizationMap } from "../types/mapper/organization.mapper";
 
-let GetById = async (id: Number) => {
+let GetById = async (id: Number) : Promise<Organization> => {
     try {
         const result = await prisma.organization
             .findUnique({
@@ -10,18 +11,18 @@ let GetById = async (id: Number) => {
                 },
             })
 
-        return result
+        return OrganizationMap.toModel(result);
     } catch (e) {
         throw e
     }
 }
 
-let GetAll = async () => {
+let GetAll = async () : Promise<Organization[]> => {
     try {
         const result = await prisma.organization
             .findMany()
 
-        return result
+        return result.map((org) => OrganizationMap.toModel(org));
     } catch (e) {
         throw e
     }
