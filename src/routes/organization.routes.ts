@@ -1,16 +1,17 @@
 import express from 'express'
-import orgController from '../controllers/organization.controller'
+import OrganizationController from '../controllers/organization.controller'
 
+const controller = new OrganizationController()
 const router = express.Router()
 
-router.get('/:id', orgController.GetById)
+router.get('/:id', controller.GetById)
 
-router.get('/', orgController.GetAll)
+router.get('/', controller.GetAll)
 
-router.post('/Insert', orgController.Insert)
+router.post('/', controller.Insert)
 
-router.put('/:id', orgController.Update)
+router.put('/:id', controller.Update)
 
-router.delete('/:id', orgController.Delete)
+router.delete('/:id', controller.Delete)
 
 module.exports = router;

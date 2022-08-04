@@ -1,69 +1,84 @@
+import { Organization } from '@prisma/client';
 import { Request, Response } from 'express'
-import organization from '../services/organization.service';
-import { OrganizationMap } from "../types/mapper/organization.mapper";
+import OrganizationService from '../services/organization.service';
+import { OrganizationDTO } from '../types/dtos/organization.dto';
+import { Mapper } from "../types/mapper/organization.mapper";
 
-let GetById = async (req: Request, res: Response) => {
-    let id = req.params.id;
-    try {
-        var result = await organization.GetById(Number(id))
-        res.status(200).json(OrganizationMap.toDTO(result));
-    } catch (e) {
-        res.status(500).send({
-            message: "Unexpected error"
-        })
+const mapper = new Mapper();
+const service = new OrganizationService();
+
+export default class OrganizationController {
+
+    public async GetById (req: Request, res: Response) 
+    {
+        let id = req.params.id;
+        try {
+            var result = await service.GetById(Number(id))
+            
+            if (result === null ) res.status(404).json({ message: "Not found" });
+
+            let dto : OrganizationDTO | null = null;
+            mapper.map<Organization | null, OrganizationDTO>(result, dto);
+
+            res.status(200).json(dto);
+        } catch (e) {
+            res.status(500).send({
+                message: "Unexpected error"
+            })
+        }
     }
-}
+    
+    public async GetAll (_req: Request, res: Response) 
+    {
+        try {
+            var result = await service.GetAll()
+            
+            let dto : OrganizationDTO[] = Array();
+            mapper.map<Organization[], OrganizationDTO[]>(result, dto);
 
-let GetAll = async (_req: Request, res: Response) => {
-    try {
-        var result = await organization.GetAll()
-        res.status(200).json(result.map((org) => OrganizationMap.toDTO(org)))
-    } catch (e) {
-        res.status(500).send({
-            message: "Unexpected error"
-        })
+            res.status(200).json(dto)
+        } catch (e) {
+            res.status(500).send({
+                message: "Unexpected error"
+            })
+        }
     }
-}
-
-let Insert = async (req: Request, res: Response) => {
-    try {
-        var result = organization.Insert(req.body)
-        res.status(201).json(result)
-    } catch (e) {
-        res.status(500).send({
-            message: "Unexpected error"
-        })
+    
+    public async Insert (req: Request, res: Response) 
+    {
+        try {
+            var result = service.Insert(req.body)
+            res.status(201).json(result)
+        } catch (e) {
+            res.status(500).send({
+                message: "Unexpected error"
+            })
+        }
     }
-}
-
-let Update = async (req: Request, res: Response) => {
-    let id = req.params.id;
-    try {
-        var result = organization.Update(Number(id), req.body)
-        res.status(200).json(result)
-    } catch (e) {
-        res.status(500).send({
-            message: "Unexpected error"
-        })
+    
+    public async Update (req: Request, res: Response) 
+    {
+        let id = req.params.id;
+        try {
+            var result = service.Update(Number(id), req.body)
+            res.status(200).json(result)
+        } catch (e) {
+            res.status(500).send({
+                message: "Unexpected error"
+            })
+        }
     }
-}
-
-let Delete = async (req: Request, res: Response) => {
-    let id = req.params.id;
-    try {
-        var result = organization.Delete(Number(id))
-        res.status(200).json(result)
-    } catch (e) {
-        res.status(500).send({
-            message: "Unexpected error"
-        })
+    
+    public async Delete (req: Request, res: Response) 
+    {
+        let id = req.params.id;
+        try {
+            var result = service.Delete(Number(id))
+            res.status(200).json(result)
+        } catch (e) {
+            res.status(500).send({
+                message: "Unexpected error"
+            })
+        }
     }
-}
-
-export default {
-    Insert,
-    GetAll,
-    GetById,
-    Update,
-    Delete
 }

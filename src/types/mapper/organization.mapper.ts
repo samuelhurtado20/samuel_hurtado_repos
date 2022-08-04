@@ -1,22 +1,25 @@
 import { Organization } from "@prisma/client";
+import { TypeMapper } from "ts-mapper";
 import { OrganizationDTO } from "../dtos/organization.dto";
-var Mapper = require('mapper');
 
-export class OrganizationMap extends Mapper<Organization> {
+export class Mapper extends TypeMapper {
+   constructor() {
+      super();
+      this.config();
+   }
 
-    public static toModel(dto: any): Organization {
-        return {
-            id_organization: Number(dto.organizationId),
-            name: dto.name,
-            status: dto.status
-        }
-    }
-
-    public static toDTO(domain: Organization): OrganizationDTO {
-        return {
-            organizationId: domain.id_organization,
-            name: domain.name,
-            status: domain.status
-        }
-    }
+   private config(): void {
+      // put here your mapping configurations
+      this.createMap<Organization, OrganizationDTO>()
+        .map(src => src.id_organization, dest => dest.organizationId)
+        .map(src => src.name, dest => dest.name)
+        .map(src => src.status, dest => dest.status);
+        
+      this.createMap<OrganizationDTO, Organization>()
+      .map(src => src.organizationId, dest => dest.id_organization)
+      .map(src => src.name, dest => dest.name)
+      .map(src => src.status, dest => dest.status);
+   }
 }
+
+const mapper = new Mapper();
