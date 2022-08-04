@@ -1,8 +1,9 @@
-import { Organization } from '@prisma/client';
 import { Request, Response } from 'express'
+import { Organization } from '@prisma/client';
+import { Mapper } from "../types/mapper/mapper";
 import OrganizationService from '../services/organization.service';
 import { OrganizationDTO } from '../types/dtos/organization.dto';
-import { Mapper } from "../types/mapper/organization.mapper";
+import ResponseDTO from "../types/dtos/response.dto";
 
 const mapper = new Mapper();
 const service = new OrganizationService();
@@ -15,16 +16,14 @@ export default class OrganizationController {
         try {
             var result = await service.GetById(Number(id))
             
-            if (result === null ) res.status(404).json({ message: "Not found" });
+            if (result === null ) res.status(404).json(new ResponseDTO(true, 'Not found', null));
 
             let dto : OrganizationDTO | null = null;
             mapper.map<Organization | null, OrganizationDTO>(result, dto);
 
-            res.status(200).json(dto);
+            res.status(200).json(new ResponseDTO(true, '', dto));
         } catch (e) {
-            res.status(500).send({
-                message: "Unexpected error"
-            })
+            res.status(500).json(new ResponseDTO(false, 'Unexpected error', null));
         }
     }
     
@@ -36,11 +35,9 @@ export default class OrganizationController {
             let dto : OrganizationDTO[] = Array();
             mapper.map<Organization[], OrganizationDTO[]>(result, dto);
 
-            res.status(200).json(dto)
+            res.status(200).json(new ResponseDTO(true, '', dto));
         } catch (e) {
-            res.status(500).send({
-                message: "Unexpected error"
-            })
+            res.status(500).json(new ResponseDTO(false, 'Unexpected error', null));
         }
     }
     
@@ -50,9 +47,7 @@ export default class OrganizationController {
             var result = service.Insert(req.body)
             res.status(201).json(result)
         } catch (e) {
-            res.status(500).send({
-                message: "Unexpected error"
-            })
+            res.status(500).json(new ResponseDTO(false, 'Unexpected error', null));
         }
     }
     
@@ -63,9 +58,7 @@ export default class OrganizationController {
             var result = service.Update(Number(id), req.body)
             res.status(200).json(result)
         } catch (e) {
-            res.status(500).send({
-                message: "Unexpected error"
-            })
+            res.status(500).json(new ResponseDTO(false, 'Unexpected error', null));
         }
     }
     
@@ -76,9 +69,7 @@ export default class OrganizationController {
             var result = service.Delete(Number(id))
             res.status(200).json(result)
         } catch (e) {
-            res.status(500).send({
-                message: "Unexpected error"
-            })
+            res.status(500).json(new ResponseDTO(false, 'Unexpected error', null));
         }
     }
 }
