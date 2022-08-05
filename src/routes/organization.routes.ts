@@ -4,7 +4,7 @@ import OrganizationController from '../controllers/organization.controller'
 const controller = new OrganizationController()
 const router = express.Router()
 
-router.get('/:id', controller.GetById)
+router.get('/:id', controller.GetById) 
 
 router.get('/', controller.GetAll)
 

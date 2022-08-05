@@ -6,6 +6,8 @@ const router = express.Router()
 
 router.get('/:id', controller.Filter)
 
+router.get('/', controller.GetAll)
+
 router.post('/', controller.Insert)
 
 module.exports = router;

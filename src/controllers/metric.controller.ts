@@ -22,6 +22,22 @@ export default class MetricController {
         }
     }
     
+    public async GetAll (_req: Request, res: Response) 
+    {
+        try {
+            const result = await service.GetAll(); 
+            const data = Array(); 
+            result.forEach(element => {
+                data.push(new MetricDTO(element).convert())
+            });
+
+            res.status(200).json(new ResponseDTO(true, '', data));
+        } catch (e) {
+            console.log(e)
+            res.status(500).json(new ResponseDTO(false, 'Unexpected error', null));
+        }
+    }
+    
     public async Insert (req: Request, res: Response) 
     {
         try {

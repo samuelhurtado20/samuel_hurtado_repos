@@ -5,10 +5,10 @@ const prisma = new PrismaClient()
 
 export default class RepositoryService 
 {
-    public async Filter(id: Number) {
+    public async Filter(id: bigint) {
         const year = new Date().getFullYear();
         try {
-            const tribeDB = await prisma.repository.findMany({
+            const repoDB = await prisma.repository.findMany({
                 where: {
                     id_repository: Number(id),
                 },
@@ -17,18 +17,18 @@ export default class RepositoryService
                 }
             })
 
-            return tribeDB;
+            return repoDB;
         } catch (e) {
             throw e
         }
     }
 
-    public async GetById(id: Number) {
+    public async GetById(id: bigint) {
         try {
-            const result = await prisma.tribe
+            const result = await prisma.repository
                 .findUnique({
                     where: {
-                        id_tribe: Number(id),
+                        id_repository: id,
                     },
                 })
 
@@ -40,7 +40,7 @@ export default class RepositoryService
 
     public async GetAll() {
         try {
-            const result = await prisma.tribe
+            const result = await prisma.repository
                 .findMany()
 
             return result;
@@ -60,10 +60,10 @@ export default class RepositoryService
         }
     }
 
-    public async Update(id: Number, repository: Repository) {
+    public async Update(id: bigint, repository: Repository) {
         try {
             const result = await prisma.repository.update({
-                where: { id_repository: Number(id) },
+                where: { id_repository: id },
                 data: repository,
             })
             return result
@@ -72,10 +72,10 @@ export default class RepositoryService
         }
     }
 
-    public async Delete(id: Number) {
+    public async Delete(id: bigint) {
         try {
             const result = await prisma.repository.delete({
-                where: { id_repository: Number(id) }
+                where: { id_repository: id }
             })
             return result
         } catch (e) {
