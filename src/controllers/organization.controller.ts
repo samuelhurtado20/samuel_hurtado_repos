@@ -1,27 +1,23 @@
 import { Request, Response } from 'express'
-import { Organization } from '@prisma/client';
-import { Mapper } from "../types/mapper/mapper";
 import OrganizationService from '../services/organization.service';
 import { OrganizationDTO } from '../types/dtos/organization.dto';
 import ResponseDTO from "../types/dtos/response.dto";
 
-const mapper = new Mapper();
 const service = new OrganizationService();
-
-export default class OrganizationController {
+  
+export default class OrganizationController 
+{
 
     public async GetById (req: Request, res: Response) 
     {
         let id = req.params.id;
         try {
-            var result = await service.GetById(Number(id))
-            
+            var result = await service.GetById(BigInt(id)) 
+            console.log(result)
             if (result === null ) res.status(404).json(new ResponseDTO(true, 'Not found', null));
 
-            let dto : OrganizationDTO | null = null;
-            mapper.map<Organization | null, OrganizationDTO>(result, dto);
-
-            res.status(200).json(new ResponseDTO(true, '', dto));
+            const data = new OrganizationDTO(result!).convert();
+            res.status(200).json(new ResponseDTO(true, '', data));
         } catch (e) {
             res.status(500).json(new ResponseDTO(false, 'Unexpected error', null));
         }
@@ -30,13 +26,15 @@ export default class OrganizationController {
     public async GetAll (_req: Request, res: Response) 
     {
         try {
-            var result = await service.GetAll()
-            
-            let dto : OrganizationDTO[] = Array();
-            mapper.map<Organization[], OrganizationDTO[]>(result, dto);
+            const result = await service.GetAll();
+            const data = Array();
+            result.forEach(element => {
+                data.push(new OrganizationDTO(element).convert())
+            });
 
-            res.status(200).json(new ResponseDTO(true, '', dto));
+            res.status(200).json(new ResponseDTO(true, '', data));
         } catch (e) {
+            console.log(e)
             res.status(500).json(new ResponseDTO(false, 'Unexpected error', null));
         }
     }
@@ -55,7 +53,7 @@ export default class OrganizationController {
     {
         let id = req.params.id;
         try {
-            var result = service.Update(Number(id), req.body)
+            var result = service.Update(BigInt(id), req.body)
             res.status(200).json(result)
         } catch (e) {
             res.status(500).json(new ResponseDTO(false, 'Unexpected error', null));
@@ -66,7 +64,7 @@ export default class OrganizationController {
     {
         let id = req.params.id;
         try {
-            var result = service.Delete(Number(id))
+            var result = service.Delete(BigInt(id))
             res.status(200).json(result)
         } catch (e) {
             res.status(500).json(new ResponseDTO(false, 'Unexpected error', null));

@@ -1,0 +1,8 @@
+POST http://localhost:3000/tribe HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Tribe 001",
+    "status": 1,
+    "id_organization": "785164685392379906"
+}
