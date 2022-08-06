@@ -16,7 +16,7 @@ export default class MetricService
             'join public."Repository" r on t.id_tribe = r.id_tribe ' +
             'join public."Metric" m on r.id_repository = m.id_repository';
             const result = await prisma.$queryRawUnsafe(sql, id)
-            console.log(result)
+            
             return result;
         } catch (e) {
             throw e

@@ -4,6 +4,8 @@ import MetricController from '../controllers/metric.controller'
 const controller = new MetricController()
 const router = express.Router()
 
+router.get('/csv/:id', controller.Csv)
+
 router.get('/filter/:id', controller.Filter)
 
 router.get('/', controller.GetAll)

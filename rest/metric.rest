@@ -1,4 +1,8 @@
 
+### get csv
+GET http://localhost:3000/metric/csv/1 HTTP/1.1
+content-type: application/json
+
 ### get filter
 GET http://localhost:3000/metric/filter/1 HTTP/1.1
 content-type: application/json

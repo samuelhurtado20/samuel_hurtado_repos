@@ -2,10 +2,51 @@ import { Request, Response } from 'express'
 import MetricService from '../services/metric.service';
 import { MetricDTO } from '../types/dtos/metric.dto';
 import ResponseDTO from "../types/dtos/response.dto";
+const converter = require('json-2-csv');
+import fs from 'fs'
+import path from 'path'
 
 const service = new MetricService();
 
 export default class MetricController {
+
+    public async Csv (req: Request, res: Response) 
+    {
+        let id = req.params.id;
+        try {
+            const result = await service.Filter(Number(id))
+
+            if (result === null ) res.status(404).json(new ResponseDTO(true, 'Not found', null));
+            let filename = 'myFile.csv';
+            let absPath = path.join(__dirname, '/csv/', filename);
+            let relPath = path.join('./csv', filename);
+
+            converter.json2csv(result, (err: any, csv: any) => {
+                if (err) {
+                    throw err;
+                }            
+                fs.writeFile(relPath, csv, (err) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    res.download(relPath, (err) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                        fs.unlink(relPath, (err) => {
+                            if (err) {
+                            console.log(err);
+                            }
+                            console.log('FILE [' + filename + '] REMOVED!');
+                        });
+                    });
+                });
+                
+            });
+        } catch (e) {
+            res.status(500).json(new ResponseDTO(false, 'Unexpected error', null));
+        }
+    }
 
     public async Filter (req: Request, res: Response) 
     {

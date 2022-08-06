@@ -1,0 +1,3 @@
+id,name,tribe,organization,coverage,code_smells,bugs,vulnerabilities,hotspot,state,id_organization,status,id_tribe
+1,Repository 001,Tribe 001,Organization 001,76.5,0,2,0,0,1,1,1,1
+2,Repository 002,Tribe 001,Organization 001,74.5,0,0,0,0,1,1,1,1
