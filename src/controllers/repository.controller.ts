@@ -12,7 +12,7 @@ export default class RepositoryController
     {
         let id = req.params.id;
         try {
-            var result = await service.GetById(BigInt(id)) 
+            var result = await service.GetById(Number(id)) 
             console.log(result)
             if (result === null ) res.status(404).json(new ResponseDTO(true, 'Not found', null));
 
@@ -53,7 +53,7 @@ export default class RepositoryController
     {
         let id = req.params.id;
         try {
-            var result = service.Update(BigInt(id), req.body)
+            var result = service.Update(Number(id), req.body)
             res.status(200).json(result)
         } catch (e) {
             res.status(500).json(new ResponseDTO(false, 'Unexpected error', null));
@@ -64,7 +64,7 @@ export default class RepositoryController
     {
         let id = req.params.id;
         try {
-            var result = service.Delete(BigInt(id))
+            var result = service.Delete(Number(id))
             res.status(200).json(result)
         } catch (e) {
             res.status(500).json(new ResponseDTO(false, 'Unexpected error', null));

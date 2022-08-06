@@ -12,11 +12,11 @@ export default class MetricController {
         let id = req.params.id;
         try {
             const result = await service.Filter(Number(id))
-            
+            console.log(result)
             if (result === null ) res.status(404).json(new ResponseDTO(true, 'Not found', null));
 
-            const data = new MetricDTO(result).convert();
-            res.status(200).json(new ResponseDTO(true, '', data));
+            //const data = new MetricDTO(result).convert();
+            res.status(200).json(new ResponseDTO(true, '', result));
         } catch (e) {
             res.status(500).json(new ResponseDTO(false, 'Unexpected error', null));
         }

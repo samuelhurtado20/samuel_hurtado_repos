@@ -3,7 +3,7 @@ import { OrganizationDTO } from '../types/dtos/organization.dto';
 const prisma = new PrismaClient()
 
 export default class OrganizationService {
-    public async GetById(id: bigint) {
+    public async GetById(id: number) {
         try {
             const result = await prisma.organization
                 .findUnique({
@@ -43,7 +43,7 @@ export default class OrganizationService {
         }
     }
 
-    public async Update(id: bigint, organization: Organization) {
+    public async Update(id: number, organization: Organization) {
         try {
             const result = await prisma.organization.update({
                 where: { id_organization: id },
@@ -55,7 +55,7 @@ export default class OrganizationService {
         }
     }
 
-    public async Delete(id: bigint) {
+    public async Delete(id: number) {
         try {
             const result = await prisma.organization.delete({
                 where: { id_organization: id }

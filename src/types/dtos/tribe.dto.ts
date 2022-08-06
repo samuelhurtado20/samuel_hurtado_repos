@@ -2,8 +2,8 @@ import { Repository, Tribe } from "@prisma/client";
 import { Status } from "../enums/status.enum";
 
 export class TribeDTO {
-    tribeId: bigint;
-    organizationId: bigint;
+    tribeId: number;
+    organizationId: number;
     name: String
     status: Status;
     repos: Repository[]

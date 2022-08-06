@@ -3,7 +3,7 @@ GET http://localhost:3000/organization HTTP/1.1
 content-type: application/json
 
 ### get one
-GET http://localhost:3000/organization/785164536527257602 HTTP/1.1
+GET http://localhost:3000/organization/1 HTTP/1.1
 content-type: application/json
 
 ### insert one
@@ -11,6 +11,6 @@ POST http://localhost:3000/organization HTTP/1.1
 content-type: application/json
 
 {
-    "name": "Organization 005",
+    "name": "Organization 001",
     "status": 1
 }

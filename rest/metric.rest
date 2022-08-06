@@ -1,4 +1,8 @@
 
+### get filter
+GET http://localhost:3000/metric/filter/1 HTTP/1.1
+content-type: application/json
+
 ### get all 
 GET http://localhost:3000/metric HTTP/1.1
 content-type: application/json
@@ -12,9 +16,9 @@ POST http://localhost:3000/metric HTTP/1.1
 content-type: application/json
 
 {
-    "id_repository": ,
-    "coverage": 76.5,
-    "bugs": 2,
+    "id_repository": 2,
+    "coverage": 74.5,
+    "bugs": 0,
     "vulnerabilities": 0,
     "hotspot": 0,
     "code_smells": 0

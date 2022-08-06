@@ -5,12 +5,12 @@ const prisma = new PrismaClient()
 
 export default class RepositoryService 
 {
-    public async Filter(id: bigint) {
+    public async Filter(id: number) {
         const year = new Date().getFullYear();
         try {
             const repoDB = await prisma.repository.findMany({
                 where: {
-                    id_repository: Number(id),
+                    id_repository: id,
                 },
                 include: {
                     Metric: true,
@@ -23,7 +23,7 @@ export default class RepositoryService
         }
     }
 
-    public async GetById(id: bigint) {
+    public async GetById(id: number) {
         try {
             const result = await prisma.repository
                 .findUnique({
@@ -52,7 +52,14 @@ export default class RepositoryService
     public async Insert(repository: Repository) {
         try {
             const result = await prisma.repository.create({
-                data: repository,
+                data: {
+                    name: repository.name,
+                    status: repository.status,
+                    state: repository.state,
+                    Tribe: {
+                        connect: { id_tribe: repository.id_tribe },
+                      },
+                },
             })
             return result
         } catch (e) {
@@ -60,7 +67,7 @@ export default class RepositoryService
         }
     }
 
-    public async Update(id: bigint, repository: Repository) {
+    public async Update(id: number, repository: Repository) {
         try {
             const result = await prisma.repository.update({
                 where: { id_repository: id },
@@ -72,7 +79,7 @@ export default class RepositoryService
         }
     }
 
-    public async Delete(id: bigint) {
+    public async Delete(id: number) {
         try {
             const result = await prisma.repository.delete({
                 where: { id_repository: id }

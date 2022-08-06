@@ -11,34 +11,34 @@ datasource db {
 }
 
 model Organization {
-  id_organization BigInt  @id @default(autoincrement()) @db.BigInt
+  id_organization Int     @id @default(autoincrement()) @db.Integer
   name            String
   status          Int
   Tribe           Tribe[]
 }
 
 model Tribe {
-  id_tribe        BigInt       @id @default(autoincrement()) @db.BigInt
+  id_tribe        Int          @id @default(autoincrement()) @db.Integer
   name            String
   status          Int
   Organization    Organization @relation(fields: [id_organization], references: [id_organization])
-  id_organization BigInt
+  id_organization Int
   Repository      Repository[]
 }
 
 model Repository {
-  id_repository BigInt   @id @default(autoincrement()) @db.BigInt
+  id_repository Int      @id @default(autoincrement()) @db.Integer
   name          String
   state         String   @db.Char(1)
   create_time   DateTime @default(now())
   status        Int
   Tribe         Tribe    @relation(fields: [id_tribe], references: [id_tribe])
-  id_tribe      BigInt
+  id_tribe      Int
   Metric        Metric?
 }
 
 model Metric {
-  id_repository   BigInt     @id @unique @db.BigInt
+  id_repository   Int        @id @unique @db.Integer
   Repository      Repository @relation(fields: [id_repository], references: [id_repository])
   coverage        Float      @db.DoublePrecision
   bugs            Int

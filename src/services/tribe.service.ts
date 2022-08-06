@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 
 export default class TribeService 
 {
-    public async Filter(id: bigint) {
+    public async Filter(id: number) {
         const year = new Date().getFullYear();
         try {
             const tribeDB = await prisma.tribe.findFirst({
@@ -34,12 +34,12 @@ export default class TribeService
         }
     }
 
-    public async GetById(id: Number) {
+    public async GetById(id: number) {
         try {
             const result = await prisma.tribe
                 .findUnique({
                     where: {
-                        id_tribe: Number(id),
+                        id_tribe: id,
                     },
                 })
 
@@ -67,7 +67,7 @@ export default class TribeService
                     name: tribe.name,
                     status: tribe.status,
                     Organization: {
-                        connect: {id_organization: BigInt(tribe.id_organization)},
+                        connect: { id_organization: tribe.id_organization },
                       },
                 },
             })
@@ -77,10 +77,10 @@ export default class TribeService
         }
     }
 
-    public async Update(id: Number, tribe: Tribe) {
+    public async Update(id: number, tribe: Tribe) {
         try {
             const result = await prisma.tribe.update({
-                where: { id_tribe: Number(id) },
+                where: { id_tribe: id },
                 data: tribe,
             })
             return result
@@ -89,10 +89,10 @@ export default class TribeService
         }
     }
 
-    public async Delete(id: Number) {
+    public async Delete(id: number) {
         try {
             const result = await prisma.tribe.delete({
-                where: { id_tribe: Number(id) }
+                where: { id_tribe: id }
             })
             return result
         } catch (e) {

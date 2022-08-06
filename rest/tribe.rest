@@ -3,6 +3,10 @@
 GET http://localhost:3000/tribe HTTP/1.1
 content-type: application/json
 
+### get one 
+GET http://localhost:3000/tribe/1 HTTP/1.1
+content-type: application/json
+
 ### insert one
 POST http://localhost:3000/tribe HTTP/1.1
 content-type: application/json
@@ -10,9 +14,9 @@ content-type: application/json
 {
     "name": "Tribe 001",
     "status": 1,
-    "id_organization": "785164685392379906"
+    "id_organization": 1
 }
 
 ### filter
-GET http://localhost:3000/tribe/785192297130917889 HTTP/1.1
+GET http://localhost:3000/tribe/1 HTTP/1.1
 content-type: application/json

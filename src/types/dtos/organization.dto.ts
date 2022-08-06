@@ -3,7 +3,7 @@ import { AnyARecord } from "dns";
 import { Status } from "../enums/status.enum";
 
 export class OrganizationDTO {
-    organizationId: bigint;
+    organizationId: number;
     name: string;
     status: Status;
 

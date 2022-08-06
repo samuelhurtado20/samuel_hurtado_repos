@@ -12,10 +12,8 @@ POST http://localhost:3000/repository HTTP/1.1
 content-type: application/json
 
 {
-    "id_repository": ,
-    "coverage": 76.5,
-    "bugs": 2,
-    "vulnerabilities": 0,
-    "hotspot": 0,
-    "code_smells": 0
+    "id_tribe": 1,
+    "name": "Repository 002",
+    "state": "1",
+    "status": 1
 }
