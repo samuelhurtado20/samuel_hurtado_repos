@@ -36,7 +36,11 @@ export default class OrganizationService {
                     name: organization.name,
                     status: organization.status,
                   },
+                  select: {
+                    id_organization: true,
+                  },
             })
+            console.log(result)
             return result
         } catch (e) {
             throw e
@@ -62,6 +66,19 @@ export default class OrganizationService {
             })
             return result
         } catch (e) {
+            throw e
+        }
+    }
+
+    public async DeleteAll() {
+        try {
+            const result = await prisma.organization.deleteMany({
+                where: { id_organization: { gt: 0 } }
+            })
+            console.log(result)
+            return result
+        } catch (e) {
+            console.log(e)
             throw e
         }
     }

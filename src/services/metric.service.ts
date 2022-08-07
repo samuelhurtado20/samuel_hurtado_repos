@@ -7,6 +7,7 @@ export default class MetricService
 {
     public async Filter(id: number) {
         try {
+            const coverage = process.env.COVERAGE;
             const sql = 'SELECT ' +
             'r.id_repository id, r.name, t.name tribe, o.name organization, ' +
             'm.coverage, m.code_smells, m.bugs, m.vulnerabilities, m.hotspot, r.state, ' +
@@ -14,11 +15,12 @@ export default class MetricService
             'FROM public."Organization" o ' +
             'join public."Tribe" t on o.id_organization = t.id_organization ' +
             'join public."Repository" r on t.id_tribe = r.id_tribe ' +
-            'join public."Metric" m on r.id_repository = m.id_repository';
-            const result = await prisma.$queryRawUnsafe(sql, id)
+            'join public."Metric" m on r.id_repository = m.id_repository where m.coverage > $1 and t.id_tribe = $2';
+            const result : [] = await prisma.$queryRawUnsafe(sql, Number(coverage), id)
             
             return result;
         } catch (e) {
+            console.log(e)
             throw e
         }
     }

@@ -14,4 +14,6 @@ router.put('/:id', controller.Update)
 
 router.delete('/:id', controller.Delete)
 
+router.delete('/all', controller.DeleteAll)
+
 module.exports = router;

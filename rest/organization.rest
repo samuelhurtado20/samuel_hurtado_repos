@@ -1,16 +1,20 @@
 ### get all
-GET http://localhost:3000/organization HTTP/1.1
+GET http://localhost:3000/api/organization HTTP/1.1
 content-type: application/json
 
 ### get one
-GET http://localhost:3000/organization/1 HTTP/1.1
+GET http://localhost:3000/api/organization/1 HTTP/1.1
 content-type: application/json
 
 ### insert one
-POST http://localhost:3000/organization HTTP/1.1
+POST http://localhost:3000/api/organization HTTP/1.1
 content-type: application/json
 
 {
-    "name": "Organization 001",
+    "name": "Organization 002",
     "status": 1
 }
+
+### delete all
+DELETE  http://localhost:3000/api/organization/all HTTP/1.1
+content-type: application/json

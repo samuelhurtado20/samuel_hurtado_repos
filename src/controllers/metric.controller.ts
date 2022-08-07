@@ -5,10 +5,13 @@ import ResponseDTO from "../types/dtos/response.dto";
 const converter = require('json-2-csv');
 import fs from 'fs'
 import path from 'path'
+import TribeService from '../services/tribe.service';
 
 const service = new MetricService();
+const tribeService = new TribeService();
 
-export default class MetricController {
+export default class MetricController 
+{
 
     public async Csv (req: Request, res: Response) 
     {
@@ -18,7 +21,6 @@ export default class MetricController {
 
             if (result === null ) res.status(404).json(new ResponseDTO(true, 'Not found', null));
             let filename = 'myFile.csv';
-            let absPath = path.join(__dirname, '/csv/', filename);
             let relPath = path.join('./csv', filename);
 
             converter.json2csv(result, (err: any, csv: any) => {
@@ -35,7 +37,7 @@ export default class MetricController {
                     }
                         fs.unlink(relPath, (err) => {
                             if (err) {
-                            console.log(err);
+                                console.log(err);
                             }
                             console.log('FILE [' + filename + '] REMOVED!');
                         });
@@ -51,13 +53,25 @@ export default class MetricController {
     public async Filter (req: Request, res: Response) 
     {
         let id = req.params.id;
-        try {
-            const result = await service.Filter(Number(id))
-            console.log(result)
-            if (result === null ) res.status(404).json(new ResponseDTO(true, 'Not found', null));
-
-            //const data = new MetricDTO(result).convert();
-            res.status(200).json(new ResponseDTO(true, '', result));
+        try 
+        {
+            const tribe = await tribeService.GetById(Number(id));
+            if(tribe === null)
+            {
+                res.status(404).json(new ResponseDTO(false, 'La Tribu no se encuentra registrada', null));
+            }
+            else
+            {
+                const result = await service.Filter(Number(id))
+                if (result.length <= 0 ) 
+                {
+                    res.status(404).json(new ResponseDTO(false, 'La Tribu no tiene repositorios que cumplan con la cobertura necesaria', null));    
+                }
+                else
+                {
+                    res.status(200).json(new ResponseDTO(true, '', result));
+                }
+            }
         } catch (e) {
             res.status(500).json(new ResponseDTO(false, 'Unexpected error', null));
         }
