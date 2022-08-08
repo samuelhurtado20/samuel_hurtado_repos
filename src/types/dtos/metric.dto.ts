@@ -1,7 +1,7 @@
 import { Metric } from "@prisma/client";
 
 export class MetricDTO {
-    repositoryId: number;
+    repositoryId: BigInt;
     coverage : number;
     vulnerabilities : number;
     hotspot : number;

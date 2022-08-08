@@ -5,8 +5,7 @@ const prisma = new PrismaClient()
 
 export default class RepositoryService 
 {
-    public async Filter(id: number) {
-        const year = new Date().getFullYear();
+    public async Filter(id: bigint) {
         try {
             const repoDB = await prisma.repository.findMany({
                 where: {
@@ -23,7 +22,7 @@ export default class RepositoryService
         }
     }
 
-    public async GetById(id: number) {
+    public async GetById(id: bigint) {
         try {
             const result = await prisma.repository
                 .findUnique({
@@ -67,7 +66,7 @@ export default class RepositoryService
         }
     }
 
-    public async Update(id: number, repository: Repository) {
+    public async Update(id: bigint, repository: Repository) {
         try {
             const result = await prisma.repository.update({
                 where: { id_repository: id },
@@ -79,7 +78,7 @@ export default class RepositoryService
         }
     }
 
-    public async Delete(id: number) {
+    public async Delete(id: bigint) {
         try {
             const result = await prisma.repository.delete({
                 where: { id_repository: id }

@@ -31,4 +31,13 @@ export default class Utils
 
         return res.data;
     }
+
+    static Convert(data: any): any {
+        return JSON.parse(JSON.stringify(data, (_key, value) =>
+            typeof value === 'bigint'
+                ? value.toString()
+                : value
+        ));
+    }
+
   }

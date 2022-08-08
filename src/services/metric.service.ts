@@ -1,11 +1,9 @@
 import { Metric, PrismaClient } from '@prisma/client'
-import { MetricDTO } from '../types/dtos/metric.dto';
-import { State } from '../types/enums/state.enum';
 const prisma = new PrismaClient()
 
 export default class MetricService 
 {
-    public async Filter(id: number) {
+    public async Filter(id: bigint) {
         try {
             const coverage = process.env.COVERAGE;
             const sql = 'SELECT ' +
@@ -24,31 +22,14 @@ export default class MetricService
             throw e
         }
     }
-    
-    // public async Filter(id: number) {
-    //     try {
-    //         const metricsDB = await prisma.metric.findFirst({
-    //             where: {
-    //                 id_repository: number(id),
-    //                 coverage: {
-    //                     gt: 75
-    //                 }
-    //             }
-    //         })
 
-    //         return metricsDB;
-    //     } catch (e) {
-    //         throw e
-    //     }
-    // }
-
-    public async GetById(id: number) : Promise<Metric | null> 
+    public async GetById(id: bigint) : Promise<Metric | null> 
     {
         try {
             const result = await prisma.metric
                 .findUnique({
                     where: {
-                        id_repository: id,
+                        id_repository: BigInt(id),
                     },
                 })
 
@@ -81,10 +62,10 @@ export default class MetricService
         }
     }
 
-    public async Update(id: number, metrics: Metric) {
+    public async Update(id: bigint, metrics: Metric) {
         try {
             const result = await prisma.metric.update({
-                where: { id_repository: id },
+                where: { id_repository: BigInt(id) },
                 data: metrics,
             })
             return result
@@ -93,10 +74,10 @@ export default class MetricService
         }
     }
 
-    public async Delete(id: number) {
+    public async Delete(id: bigint) {
         try {
             const result = await prisma.metric.delete({
-                where: { id_repository: id }
+                where: { id_repository: BigInt(id) }
             })
             return result
         } catch (e) {

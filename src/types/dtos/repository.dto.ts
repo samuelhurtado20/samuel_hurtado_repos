@@ -4,12 +4,12 @@ import { Status } from "../enums/status.enum";
 
 export class RepositoryDTO 
 {    
-    repositoryId: number;
+    repositoryId: BigInt;
     name: String;
     state: State;
     createAt: Date;
     status: Status;
-    tribeId: number
+    tribeId: BigInt
 
     constructor(data: Repository){
         this.repositoryId = data.id_repository;

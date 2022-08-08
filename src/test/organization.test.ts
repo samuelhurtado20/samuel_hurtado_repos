@@ -1,4 +1,3 @@
-import { doesNotMatch } from 'assert'
 import supertest from 'supertest'
 import { app, server } from '../index'
 const nock = require('nock')
@@ -12,7 +11,7 @@ const organization = {
 }
 
 beforeEach(async () => {
-  await api.delete('/api/organization/all')
+  await api.delete('/api/organization/')
   const response = await api.post('/api/organization').send(organization)
   .expect(201)
   organization.id_organization = response.body.id_organization
@@ -38,7 +37,7 @@ describe('GET a organization', () => {
 
   test('by id with an invalid id', async () => {
     const response = await api
-      .get('/api/organization/' + organization.id_organization * 100)
+      .get('/api/organization/' + '586137640620523522'.toString())
       .expect(404)
       .expect('Content-Type', /application\/json/)
     expect(response.body.message).toEqual('Not found')

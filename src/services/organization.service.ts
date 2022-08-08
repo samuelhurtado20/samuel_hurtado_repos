@@ -2,13 +2,14 @@ import { Organization, PrismaClient } from '@prisma/client'
 import { OrganizationDTO } from '../types/dtos/organization.dto';
 const prisma = new PrismaClient()
 
-export default class OrganizationService {
-    public async GetById(id: number) {
+export default class OrganizationService 
+{
+    public async GetById(id: bigint) {
         try {
             const result = await prisma.organization
                 .findUnique({
                     where: {
-                        id_organization: id,
+                        id_organization: BigInt(id),
                     },
                 })
 
@@ -43,15 +44,19 @@ export default class OrganizationService {
 
             return result
         } catch (e) {
+            console.log(e)
             throw e
         }
     }
 
-    public async Update(id: number, organization: Organization) {
+    public async Update(id: bigint, organization: Organization) {
         try {
             const result = await prisma.organization.update({
-                where: { id_organization: id },
-                data: organization,
+                where: { id_organization: BigInt(id) },
+                data: {
+                    name: organization.name,
+                    status: organization.status,
+                },
             })
             return result
         } catch (e) {
@@ -59,7 +64,7 @@ export default class OrganizationService {
         }
     }
 
-    public async Delete(id: number) {
+    public async Delete(id: bigint) {
         try {
             const result = await prisma.organization.delete({
                 where: { id_organization: id }
@@ -73,7 +78,7 @@ export default class OrganizationService {
     public async DeleteAll() {
         
         try {
-            const sql = 'DELETE FROM public."Organization" where id_organization != 1';
+            const sql = 'DELETE FROM public."Organization" where id_organization != 786133502888280066';
             await prisma.$queryRawUnsafe(sql)
         } catch (e) {
             console.log(e)

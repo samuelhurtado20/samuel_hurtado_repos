@@ -17,7 +17,7 @@ export default class MetricController
     {
         let id = req.params.id;
         try {
-            const result = await service.Filter(Number(id))
+            const result = await service.Filter(BigInt(id))
 
             if (result === null ) res.status(404).json(new ResponseDTO(true, 'Not found', null));
             let filename = 'myFile.csv';
@@ -39,7 +39,7 @@ export default class MetricController
                             if (err) {
                                 console.log(err);
                             }
-                            console.log('FILE [' + filename + '] REMOVED!');
+                            //console.log('FILE [' + filename + '] REMOVED!');
                         });
                     });
                 });
@@ -55,14 +55,14 @@ export default class MetricController
         let id = req.params.id;
         try 
         {
-            const tribe = await tribeService.GetById(Number(id));
+            const tribe = await tribeService.GetById(BigInt(id));
             if(tribe === null)
             {
                 res.status(404).json(new ResponseDTO(false, 'La Tribu no se encuentra registrada', null));
             }
             else
             {
-                const result = await service.Filter(Number(id))
+                const result = await service.Filter(BigInt(id))
                 if (result.length <= 0 ) 
                 {
                     res.status(404).json(new ResponseDTO(false, 'La Tribu no tiene repositorios que cumplan con la cobertura necesaria', null));    
