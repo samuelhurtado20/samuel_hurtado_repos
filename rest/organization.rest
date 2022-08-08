@@ -16,5 +16,5 @@ content-type: application/json
 }
 
 ### delete all
-DELETE  http://localhost:3000/api/organization/all HTTP/1.1
+DELETE  http://localhost:3000/api/organization HTTP/1.1
 content-type: application/json

@@ -15,7 +15,7 @@ export default class TribeController {
             const result = await service.Filter(Number(id))
             
             if (result === null ) res.status(404).json(new ResponseDTO(true, 'Not found', null));
-            console.log(result);
+
             const data = new TribeDTO(result!, result!.Repository).convert();
             res.status(200).json(new ResponseDTO(true, '', data));
         } catch (e) {

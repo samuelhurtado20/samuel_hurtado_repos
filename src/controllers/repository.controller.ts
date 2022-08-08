@@ -13,7 +13,7 @@ export default class RepositoryController
         let id = req.params.id;
         try {
             var result = await service.GetById(Number(id)) 
-            console.log(result)
+
             if (result === null ) res.status(404).json(new ResponseDTO(true, 'Not found', null));
 
             const data = new RepositoryDTO(result!).convert();

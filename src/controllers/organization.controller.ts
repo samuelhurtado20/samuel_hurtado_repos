@@ -7,13 +7,12 @@ const service = new OrganizationService();
   
 export default class OrganizationController 
 {
-
     public async GetById (req: Request, res: Response) 
     {
         let id = req.params.id;
         try {
             var result = await service.GetById(Number(id)) 
-            console.log(result)
+
             if (result === null ) 
             {
                 res.status(404).json(new ResponseDTO(true, 'Not found', null));
@@ -79,9 +78,8 @@ export default class OrganizationController
     public async DeleteAll (_req: Request, res: Response) 
     {
         try {
-            var result = await service.DeleteAll()
-            console.log(result)
-            res.status(200).json(result)
+            await service.DeleteAll()
+            res.status(200).json(new ResponseDTO(true, 'Deleted', null))
         } catch (e) {
             console.log(e)
             res.status(500).json(new ResponseDTO(false, 'Unexpected error', null));

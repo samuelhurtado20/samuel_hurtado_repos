@@ -40,7 +40,7 @@ export default class OrganizationService {
                     id_organization: true,
                   },
             })
-            console.log(result)
+
             return result
         } catch (e) {
             throw e
@@ -71,12 +71,10 @@ export default class OrganizationService {
     }
 
     public async DeleteAll() {
+        
         try {
-            const result = await prisma.organization.deleteMany({
-                where: { id_organization: { gt: 0 } }
-            })
-            console.log(result)
-            return result
+            const sql = 'DELETE FROM public."Organization" where id_organization != 1';
+            await prisma.$queryRawUnsafe(sql)
         } catch (e) {
             console.log(e)
             throw e

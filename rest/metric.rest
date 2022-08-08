@@ -1,22 +1,22 @@
 
 ### get csv
-GET http://localhost:3000/metric/csv/1 HTTP/1.1
+GET http://localhost:3000/api/metric/csv/1 HTTP/1.1
 content-type: application/json
 
 ### get filter
-GET http://localhost:3000/metric/filter/1 HTTP/1.1
+GET http://localhost:3000/api/metric/filter/1 HTTP/1.1
 content-type: application/json
 
 ### get all 
-GET http://localhost:3000/metric HTTP/1.1
+GET http://localhost:3000/api/metric HTTP/1.1
 content-type: application/json
 
 ### get one
-GET http://localhost:3000/metric/1 HTTP/1.1
+GET http://localhost:3000/api/metric/1 HTTP/1.1
 content-type: application/json
 
 ### insert one
-POST http://localhost:3000/metric HTTP/1.1
+POST http://localhost:3000/api/metric HTTP/1.1
 content-type: application/json
 
 {

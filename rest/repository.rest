@@ -1,14 +1,14 @@
 
 ### get all 
-GET http://localhost:3000/repository HTTP/1.1
+GET http://localhost:3000/api/repository HTTP/1.1
 content-type: application/json
 
 ### get one
-GET http://localhost:3000/repository/1 HTTP/1.1
+GET http://localhost:3000/api/repository/1 HTTP/1.1
 content-type: application/json
 
 ### insert one
-POST http://localhost:3000/repository HTTP/1.1
+POST http://localhost:3000/api/repository HTTP/1.1
 content-type: application/json
 
 {
