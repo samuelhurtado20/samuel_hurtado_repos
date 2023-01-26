@@ -40,4 +40,24 @@ export default class Utils
         ));
     }
 
+    static CalPoints(data: string[]): number {
+        var sum = 0;
+        var custom = new Int32Array();
+        data.forEach((element) => 
+        {
+            if(element.toUpperCase() === "+")
+            {
+                var newElem = parseInt(custom[custom.length - 1]) + parseInt(custom[custom.length - 2]);
+                custom.push(newElem)
+            }
+            else
+            {
+                custom.push(element)
+            }
+        })
+        console.log(custom)
+        custom.forEach((element) => { sum += element })
+        return sum;
+    }
+
   }
